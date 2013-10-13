@@ -1,4 +1,4 @@
-package com.paad.compass;
+package com.simple.compass;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -112,7 +112,7 @@ public class CompassView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         // Компас представляет собой окружность, занимающую все доступное пространство
-        // Установите размеры элемента, вычислив короткую грань ( высоту или ширину )
+        // Устанавливаем размеры элемента, вычислив короткую грань ( высоту или ширину )
         int measuredWidth =  measure(widthMeasureSpec);
         int measuredHeight = measure(heightMeasureSpec);
 
@@ -125,12 +125,12 @@ public class CompassView extends View {
     private int measure(int measureSpec) {
         int result = 0;
 
-        // Декодируйте параметр measureSpec
+        // Декодируем параметр measureSpec
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
 
         if (specMode == MeasureSpec.UNSPECIFIED) {
-            // Если размеры не указанны, верните размер по умолчанию (200)
+            // Если размеры не указанны, вернем размер по умолчанию (200)
             result = DEFAULT_VIEW_SIZE;
         } else {
             result = specSize;
@@ -146,10 +146,10 @@ public class CompassView extends View {
 
         int radius = Math.min(px,py);
 
-        // Нарисуйте фон
+        // Нарисуем фон
         canvas.drawCircle(px, py, radius, circlePaint);
 
-        // Поворачивайте ракурс таким образом, чтобы
+        // Поворачиваем ракурс таким образом, чтобы
         // "верх" всегда указывал на текущее направление
         canvas.save();
         canvas.rotate(-bearing, px, py);
@@ -158,9 +158,9 @@ public class CompassView extends View {
         int cardinalX = (int)(px - textWidth / 2);
         int cardinalY = py - radius + textHeight;
 
-        // Рисуйте отметки каждые 15' и текст каждые 45'
+        // Рисуем отметки каждые 15' и текст каждые 45'
         for (int i = 0; i < 24; i++) {
-            // Нарисуйте метку
+            // Рисуем метку
             int doubleLineLen = LINE_LENGHT;
             if (i % 3 == 0) {
                 doubleLineLen = DOUBLE_LINE_LENGHT;
@@ -170,7 +170,7 @@ public class CompassView extends View {
             canvas.save();
             canvas.translate(0, textHeight);
 
-            // Нарисуйте основные точки
+            // Рисуем основные точки
             if (i % 6 == 0) {
                 String dirString = "";
                 switch (i) {
@@ -188,7 +188,7 @@ public class CompassView extends View {
                 canvas.drawText(dirString, cardinalX, cardinalY, textPaint);
             }
             else if (i % 3 == 0) {
-                // Отображайте текст каждые 45'
+                // Отображаем текст каждые 45'
                 String angle = String.valueOf(i*15);
                 float angleTextWidth = textPaint.measureText(angle);
 
